@@ -10,6 +10,7 @@ export const apiClient = axios.create({
     headers: {
         Accept: "application/json",
     },
+    adapter: "fetch",
 });
 
 apiClient.interceptors.response.use(
