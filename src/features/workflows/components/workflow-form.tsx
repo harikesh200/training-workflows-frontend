@@ -143,7 +143,7 @@ export function WorkflowForm({ onCreated }: WorkflowFormProps) {
                             <CardDescription>
                                 Upload the source material used by the
                                 maintenance agents. Each file is required and
-                                limited to 10 MiB.
+                                limited to 10 MB.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">

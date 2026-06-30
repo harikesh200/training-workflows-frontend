@@ -43,7 +43,7 @@ function workflowFileSchema(rule: FileRule) {
                     origin: "file",
                     maximum: MAX_WORKFLOW_FILE_BYTES,
                     inclusive: true,
-                    message: "File must not exceed 10 MiB.",
+                    message: "File must not exceed 10 MB.",
                 });
             }
         });

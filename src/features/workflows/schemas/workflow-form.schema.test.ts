@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -29,7 +30,7 @@ describe("workflowFormSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            const fieldErrors = result.error.flatten().fieldErrors;
+            const fieldErrors = z.flattenError(result.error).fieldErrors;
             expect(fieldErrors.machineLogs).toBeDefined();
             expect(fieldErrors.errorManual).toBeDefined();
             expect(fieldErrors.vendorCatalog).toBeDefined();
@@ -66,13 +67,13 @@ describe("workflowFormSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.machineLogs).toContain(
+            expect(z.flattenError(result.error).fieldErrors.machineLogs).toContain(
                 "Choose a CSV file for machine logs.",
             );
         }
     });
 
-    it("rejects files larger than 10 MiB", () => {
+    it("rejects files larger than 10 MB", () => {
         const oversizedFile = new File(
             [new Uint8Array(MAX_WORKFLOW_FILE_BYTES + 1)],
             "machine-logs.csv",
@@ -85,8 +86,8 @@ describe("workflowFormSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.machineLogs).toContain(
-                "File must not exceed 10 MiB.",
+            expect(z.flattenError(result.error).fieldErrors.machineLogs).toContain(
+                "File must not exceed 10 MB.",
             );
         }
     });
