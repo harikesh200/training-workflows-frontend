@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
@@ -30,6 +30,11 @@ describe("WorkflowDetailPage", () => {
         expect(screen.getByRole("alert")).toHaveTextContent(
             "Purchase-order generation failed.",
         );
+        expect(
+            within(
+                screen.getByRole("list", { name: "Workflow stages" }),
+            ).queryByText("Failed"),
+        ).not.toBeInTheDocument();
         expect(
             screen.getByRole("progressbar", {
                 name: "Workflow completion progress",

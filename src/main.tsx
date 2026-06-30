@@ -1,3 +1,4 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
@@ -14,6 +15,8 @@ if (rootElement === null) {
 
 createRoot(rootElement).render(
     <StrictMode>
-        <RouterProvider router={router} context={{ queryClient }} />
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+        </QueryClientProvider>
     </StrictMode>,
 );

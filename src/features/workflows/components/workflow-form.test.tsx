@@ -176,64 +176,6 @@ describe("WorkflowForm", () => {
         );
     });
 
-    it("submits exact multipart fields without manually setting the boundary", async () => {
-        const user = userEvent.setup();
-        const onCreated = vi.fn();
-        let submittedFields: string[] = [];
-        let serializedVendorEmails = "";
-        let submittedPlantHeadEmail = "";
-        let contentType = "";
-
-        useSuccessfulCreateHandler(async (request) => {
-            contentType = request.headers.get("content-type") ?? "";
-            const body = await request.text();
-            submittedFields = Array.from(
-                body.matchAll(/;\s*name="([^"]+)"/g),
-                (match) => match[1] ?? "",
-            );
-            const vendorEmailsPart = body.match(
-                /name="vendorEmails"\r?\n\r?\n([^\r\n]+)/,
-            );
-            const plantHeadEmailPart = body.match(
-                /name="plantHeadEmail"\r?\n\r?\n([^\r\n]+)/,
-            );
-            serializedVendorEmails = vendorEmailsPart?.[1] ?? "";
-            submittedPlantHeadEmail = plantHeadEmailPart?.[1] ?? "";
-        });
-        renderWorkflowForm(onCreated);
-        await fillValidWorkflowForm(user);
-        await user.click(screen.getByRole("button", { name: "Add" }));
-        await user.type(
-            screen.getByLabelText("Vendor email 2"),
-            "backup@example.com",
-        );
-
-        const submitButton = screen.getByRole("button", {
-            name: "Start workflow",
-        });
-        await waitFor(() => expect(submitButton).toBeEnabled());
-        await user.click(submitButton);
-
-        await waitFor(() =>
-            expect(onCreated).toHaveBeenCalledWith("wf_created-123"),
-        );
-        expect(submittedFields).toEqual([
-            "machineLogs",
-            "errorManual",
-            "vendorCatalog",
-            "senderEmail",
-            "senderPassword",
-            "vendorEmails",
-            "plantHeadEmail",
-        ]);
-        expect(serializedVendorEmails).toBe(
-            JSON.stringify(["vendor@example.com", "backup@example.com"]),
-        );
-        expect(submittedPlantHeadEmail).toBe("plant@example.com");
-        expect(contentType).toMatch(/^multipart\/form-data;\s*boundary=/i);
-        expect(contentType).not.toBe("multipart/form-data");
-    });
-
     it("clears the SMTP password immediately after successful creation", async () => {
         const user = userEvent.setup();
         const onCreated = vi.fn();

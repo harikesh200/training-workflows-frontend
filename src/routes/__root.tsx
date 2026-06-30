@@ -1,16 +1,13 @@
-import { QueryClientProvider } from "@tanstack/react-query";
 import {
-    createRootRouteWithContext,
+    createRootRoute,
     Link,
     Outlet,
     type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { AlertTriangleIcon, LoaderCircleIcon } from "lucide-react";
-import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { RouterContext } from "@/app/router-context";
 import { AppShell } from "@/shared/components/app-shell";
 import { ThemeProvider } from "@/shared/components/theme-provider";
 
@@ -77,33 +74,19 @@ function GlobalNotFound() {
     );
 }
 
-type RootProvidersProps = Readonly<{
-    children: ReactNode;
-}>;
-
-function RootProviders({ children }: RootProvidersProps) {
-    const { queryClient } = Route.useRouteContext();
-
-    return (
-        <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
-                <TooltipProvider>{children}</TooltipProvider>
-            </ThemeProvider>
-        </QueryClientProvider>
-    );
-}
-
 function RootComponent() {
     return (
-        <RootProviders>
-            <AppShell>
-                <Outlet />
-            </AppShell>
-        </RootProviders>
+        <ThemeProvider>
+            <TooltipProvider>
+                <AppShell>
+                    <Outlet />
+                </AppShell>
+            </TooltipProvider>
+        </ThemeProvider>
     );
 }
 
-export const Route = createRootRouteWithContext<RouterContext>()({
+export const Route = createRootRoute({
     component: RootComponent,
     pendingComponent: GlobalPending,
     errorComponent: GlobalRouteError,

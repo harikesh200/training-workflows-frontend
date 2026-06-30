@@ -1,11 +1,11 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation } from "@tanstack/react-query";
 
-import { createWorkflow } from '@/features/workflows/api/workflows.api'
+import { createWorkflow } from "@/features/workflows/api/workflows.api";
 
 export function useCreateWorkflow() {
-  return useMutation({
-    mutationFn: createWorkflow,
-    retry: false,
-    gcTime: 0,
-  })
+    return useMutation({
+        mutationFn: createWorkflow,
+        retry: false,
+        gcTime: 0,
+    });
 }
