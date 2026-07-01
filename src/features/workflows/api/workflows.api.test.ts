@@ -1,23 +1,12 @@
 import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
 
-import {
-    buildArtifactUrl,
-    createWorkflow,
-} from "@/features/workflows/api/workflows.api";
+import { createWorkflow } from "@/features/workflows/api/workflows.api";
 import { server } from "@/test/mocks/server";
 
 function csvFile(name: string): File {
     return new File(["header\nvalue"], name, { type: "text/csv" });
 }
-
-describe("buildArtifactUrl", () => {
-    it("safely encodes workflow IDs and artifact names", () => {
-        expect(buildArtifactUrl("wf/one two", "invoice/Acme & Sons")).toBe(
-            "http://localhost:3000/v1/workflows/wf%2Fone%20two/artifacts/invoice%2FAcme%20%26%20Sons",
-        );
-    });
-});
 
 describe("createWorkflow", () => {
     it("serializes the workflow input as browser-managed multipart data", async () => {

@@ -2,12 +2,10 @@ import { Link } from "@tanstack/react-router";
 import {
     AlertTriangleIcon,
     ArrowLeftIcon,
-    ClipboardCopyIcon,
     Clock3Icon,
     MailIcon,
     RefreshCwIcon,
 } from "lucide-react";
-import { useState } from "react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -20,7 +18,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ApiErrorAlert } from "@/features/workflows/components/api-error-alert";
-import { ArtifactList } from "@/features/workflows/components/artifact-list";
 import { ResolvedVendorList } from "@/features/workflows/components/resolved-vendor-list";
 import { WorkflowDetailSkeleton } from "@/features/workflows/components/workflow-detail-skeleton";
 import { WorkflowProgress } from "@/features/workflows/components/workflow-progress";
@@ -76,19 +73,6 @@ type WorkflowDetailProps = Readonly<{
 }>;
 
 function WorkflowDetail({ workflow }: WorkflowDetailProps) {
-    const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">(
-        "idle",
-    );
-
-    async function copyWorkflowId(): Promise<void> {
-        try {
-            await navigator.clipboard.writeText(workflow.id);
-            setCopyState("copied");
-        } catch {
-            setCopyState("failed");
-        }
-    }
-
     return (
         <div className="space-y-6">
             <div className="flex flex-col gap-5 border-b pb-6 sm:flex-row sm:items-start sm:justify-between">
@@ -106,27 +90,6 @@ function WorkflowDetail({ workflow }: WorkflowDetailProps) {
                         </h1>
                         <WorkflowStatusBadge status={workflow.status} />
                     </div>
-                    <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
-                        <p className="min-w-0 break-all font-mono text-xs tabular-nums text-muted-foreground">
-                            {workflow.id}
-                        </p>
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            className="min-h-11 self-start sm:self-auto"
-                            onClick={() => void copyWorkflowId()}
-                        >
-                            <ClipboardCopyIcon aria-hidden="true" />
-                            Copy ID
-                        </Button>
-                    </div>
-                    <p className="sr-only" role="status" aria-live="polite">
-                        {copyState === "copied"
-                            ? "Workflow ID copied."
-                            : copyState === "failed"
-                              ? "Unable to copy workflow ID."
-                              : ""}
-                    </p>
                 </div>
                 <div
                     className="sr-only"
@@ -165,21 +128,6 @@ function WorkflowDetail({ workflow }: WorkflowDetailProps) {
                         </CardContent>
                     </Card>
 
-                    <Card className="min-w-0">
-                        <CardHeader>
-                            <CardTitle>Artifacts</CardTitle>
-                            <CardDescription>
-                                Download generated analyses, invoices, and
-                                summaries.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <ArtifactList
-                                workflowId={workflow.id}
-                                artifacts={workflow.artifacts}
-                            />
-                        </CardContent>
-                    </Card>
                 </div>
 
                 <div className="min-w-0 space-y-6">
@@ -283,8 +231,8 @@ export function WorkflowDetailPage({ workflowId }: WorkflowDetailPageProps) {
                     Workflow not found
                 </h1>
                 <p className="text-base/7 text-muted-foreground">
-                    No workflow exists for{" "}
-                    <span className="break-all font-mono">{workflowId}</span>.
+                    This workflow session is no longer available. It may have
+                    expired after completion.
                 </p>
                 <Button asChild className="min-h-11">
                     <Link to="/">Start another workflow</Link>

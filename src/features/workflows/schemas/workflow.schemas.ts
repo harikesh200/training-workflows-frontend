@@ -28,11 +28,6 @@ export const workflowStepSchema = z.enum([
     "failed",
 ]);
 
-export const workflowArtifactSchema = z.object({
-    name: z.string().min(1),
-    contentType: z.string().min(1),
-});
-
 const publicWorkflowBaseSchema = z.object({
     id: z.string().min(1),
     progress: z.number().int().min(0).max(100),
@@ -40,7 +35,6 @@ const publicWorkflowBaseSchema = z.object({
     vendorEmailList: z.array(z.email()),
     resolvedVendorEmails: z.record(z.string(), z.email()),
     plantHeadEmail: z.email(),
-    artifacts: z.array(workflowArtifactSchema),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
 });

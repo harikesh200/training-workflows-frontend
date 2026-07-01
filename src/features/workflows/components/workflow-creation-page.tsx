@@ -1,7 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { ClipboardListIcon, ShieldCheckIcon } from "lucide-react";
 
-import { ResumeWorkflowForm } from "@/features/workflows/components/resume-workflow-form";
 import { WorkflowForm } from "@/features/workflows/components/workflow-form";
 
 export function WorkflowCreationPage() {
@@ -16,7 +15,7 @@ export function WorkflowCreationPage() {
 
     return (
         <div className="space-y-8">
-            <section className="grid gap-6 border-b pb-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-end">
+            <section className="border-b pb-8">
                 <div className="max-w-3xl space-y-4">
                     <p className="flex items-center gap-2 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                         <ClipboardListIcon
@@ -41,9 +40,6 @@ export function WorkflowCreationPage() {
                         Credentials and file selections are never persisted by
                         this frontend.
                     </div>
-                </div>
-                <div className="border bg-card p-4">
-                    <ResumeWorkflowForm onResume={openWorkflow} />
                 </div>
             </section>
 

@@ -14,7 +14,6 @@ const baseWorkflow = {
   vendorEmailList: ['vendor@example.com'],
   resolvedVendorEmails: {},
   plantHeadEmail: 'plant@example.com',
-  artifacts: [],
   createdAt: '2026-06-29T10:00:00.000Z',
   updatedAt: '2026-06-29T10:00:01.000Z',
 }
@@ -60,12 +59,6 @@ export function makeSucceededWorkflow(
     resolvedVendorEmails: {
       'Acme Parts': 'vendor@example.com',
     },
-    artifacts: [
-      {
-        name: 'invoice-Acme Parts',
-        contentType: 'text/csv',
-      },
-    ],
     ...overrides,
   }
 }

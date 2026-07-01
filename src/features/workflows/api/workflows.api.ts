@@ -10,7 +10,6 @@ import type {
     CreateWorkflowInput,
     PublicWorkflow,
 } from "@/features/workflows/types/workflow.types";
-import { config } from "@/shared/config/env";
 import { apiClient } from "@/shared/lib/api-client";
 import { ResponseValidationError } from "@/shared/lib/api-error";
 
@@ -66,13 +65,4 @@ export async function getWorkflow(
     );
     return parseApiResponse(workflowResponseSchema, response.data, "workflow")
         .data;
-}
-
-export function buildArtifactUrl(
-    workflowId: string,
-    artifactName: string,
-): string {
-    return `${config.apiBaseUrl}/v1/workflows/${encodeURIComponent(
-        workflowId,
-    )}/artifacts/${encodeURIComponent(artifactName)}`;
 }

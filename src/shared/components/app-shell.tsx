@@ -59,8 +59,7 @@ export function AppShell({ children }: AppShellProps) {
             </main>
             <footer className="border-t">
                 <div className="mx-auto flex min-h-14 w-full max-w-7xl items-center px-4 text-xs text-muted-foreground sm:px-6 lg:px-8">
-                    Workflow execution and artifact generation remain on the
-                    API.
+                    Workflow processing and email delivery remain on the API.
                 </div>
             </footer>
         </div>

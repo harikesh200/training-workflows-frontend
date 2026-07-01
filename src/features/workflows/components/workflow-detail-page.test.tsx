@@ -64,34 +64,11 @@ describe("WorkflowDetailPage", () => {
                 name: "Workflow not found",
             }),
         ).toBeInTheDocument();
-        expect(screen.getByText("wf_unknown")).toBeInTheDocument();
-    });
-
-    it("uses encoded, browser-navigable artifact download URLs", async () => {
-        server.use(
-            http.get("http://localhost:3000/v1/workflows/wf_artifacts", () =>
-                HttpResponse.json({
-                    data: makeSucceededWorkflow({
-                        id: "wf_artifacts",
-                        artifacts: [
-                            {
-                                name: "invoice/Acme & Sons",
-                                contentType: "text/csv",
-                            },
-                        ],
-                    }),
-                }),
+        expect(
+            screen.getByText(
+                "This workflow session is no longer available. It may have expired after completion.",
             ),
-        );
-        renderApp("/workflows/wf_artifacts");
-
-        const downloadLink = await screen.findByRole("link", {
-            name: "Download",
-        });
-        expect(downloadLink).toHaveAttribute(
-            "href",
-            "http://localhost:3000/v1/workflows/wf_artifacts/artifacts/invoice%2FAcme%20%26%20Sons",
-        );
+        ).toBeInTheDocument();
     });
 
     it("shows a recoverable network state and retries on user request", async () => {
