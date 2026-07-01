@@ -22,7 +22,7 @@ export function ResolvedVendorList({
                     key={vendor}
                     className="grid min-w-0 gap-1 p-3 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:gap-4"
                 >
-                    <dt className="break-words text-sm font-medium">
+                    <dt className="wrap-break-word text-sm font-medium">
                         {vendor}
                     </dt>
                     <dd className="break-all text-sm text-muted-foreground">

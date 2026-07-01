@@ -59,7 +59,7 @@ function TimestampRow({ label, timestamp }: TimestampRowProps) {
             <dd>
                 <time
                     dateTime={timestamp}
-                    className="break-words font-mono text-xs tabular-nums"
+                    className="wrap-break-word font-mono text-xs tabular-nums"
                 >
                     {formatTimestamp(timestamp)}
                 </time>

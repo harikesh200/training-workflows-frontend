@@ -15,7 +15,7 @@ export function WorkflowProgress({ progress }: WorkflowProgressProps) {
             </div>
             <Progress
                 value={progress}
-                className="h-2 [&_[data-slot=progress-indicator]]:motion-reduce:transition-none"
+                className="h-2 **:data-[slot=progress-indicator]:motion-reduce:transition-none"
                 aria-label="Workflow completion progress"
             />
         </div>
